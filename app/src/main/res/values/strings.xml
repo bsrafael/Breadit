@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Breadit</string>
+
+    <string name="home_title">Página inicial</string>
+
+
+
+    <string name="label_upvotes">Upvotes</string>
+    <string name="label_save">Salvar</string>
+    <string name="sample_title">This is the post title</string>
+    <string name="sample_time">8h</string>
+    <string name="sample_user">u/random_breaditor</string>
+    <string name="sample_text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio fugit, amet nesciunt, adipisci iste aut laudantium recusandae quo impedit rem aspernatur quasi sapiente commodi illo sunt a! Omnis error accusantium itaque? Adipisci aperiam nostrum a, dolore quibusdam corporis incidunt inventore voluptates quis expedita ipsam laboriosam aut placeat praesentium id porro cupiditate et. Voluptas perferendis facilis neque veniam laborum reprehenderit libero doloribus quisquam voluptatibus architecto laudantium consectetur eveniet porro obcaecati, nulla molestias ea placeat officia? Nemo expedita dicta rerum? Dicta accusamus saepe dolor officiis distinctio velit exercitationem sint id. Voluptatum corporis dolore perspiciatis obcaecati ducimus facere amet consequuntur repellat nihil labore, dolorum impedit nisi maiores, at accusamus veniam debitis laudantium inventore molestiae consectetur placeat aspernatur. Repellat saepe quo sed quidem tempore amet, laboriosam, hic earum excepturi totam, aliquam temporibus rerum molestias maiores id odio vero distinctio! Sequi voluptate corrupti inventore, officiis ipsum commodi nisi vitae libero accusantium! Quidem rerum voluptatem ipsam?</string>
+    <string name="sample_text_small">Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio fugit, amet nesciunt, adipisci iste aut laudantium recusandae quo impedit...</string>
+    <string name="sample_comment">Nice! It looks tasty!</string>
+    <string name="sample_count">123</string>
+    <string name="sample_count_2">42</string>
+
+</resources>

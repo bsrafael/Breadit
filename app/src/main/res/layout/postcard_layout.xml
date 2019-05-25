@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:id="@+id/CardName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/sample_title"
+                android:textColor="@color/colorTextPrimary"
+                android:textColorHighlight="@color/colorTextPrimary"
+                android:textColorHint="@color/colorTextPrimary"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/CardTime" />
+
+            <TextView
+                android:id="@+id/CardTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
+                android:text="@string/sample_time"
+                android:textColor="@color/colorTextTertiary"
+                android:textColorHighlight="@color/colorTextTertiary"
+                android:textColorHint="@color/colorTextTertiary"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toTopOf="@+id/CardName"
+                app:layout_constraintStart_toEndOf="@+id/CardUser"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/CardUser"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="8dp"
+                android:text="@string/sample_user"
+                android:textColor="@color/colorTextTertiary"
+                android:textColorHighlight="@color/colorTextTertiary"
+                android:textColorHint="@color/colorTextTertiary"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toTopOf="@+id/CardName"
+                app:layout_constraintEnd_toStartOf="@+id/CardTime"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/CardText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:text="@string/sample_text_small"
+                android:textColor="@color/colorTextSecondary"
+                android:textColorHighlight="@color/colorTextSecondary"
+                android:textColorHint="@color/colorTextSecondary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/CardName" />
+
+            <TextView
+                android:id="@+id/CardUpvotes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="2dp"
+                android:layout_marginBottom="8dp"
+                android:text="@string/sample_count"
+                android:textColor="@color/colorTextTertiary"
+                android:textColorHighlight="@color/colorTextTertiary"
+                android:textColorHint="@color/colorTextTertiary"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toTopOf="@+id/CardName"
+                app:layout_constraintEnd_toStartOf="@+id/CardUpvotesLabel"
+                app:layout_constraintStart_toEndOf="@+id/CardTime" />
+
+            <TextView
+                android:id="@+id/CardUpvotesLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:layout_marginBottom="8dp"
+                android:text="@string/label_upvotes"
+                android:textColor="@color/colorTextTertiary"
+                android:textColorHighlight="@color/colorTextTertiary"
+                android:textColorHint="@color/colorTextTertiary"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toTopOf="@+id/CardName"
+                app:layout_constraintStart_toEndOf="@+id/CardUpvotes" />
+
+            <Switch
+                android:id="@+id/CardSave"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:text="@string/label_save"
+                android:textColor="@color/colorTextTertiary"
+                android:textColorHighlight="@color/colorTextTertiary"
+                android:textColorHint="@color/colorTextTertiary"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toTopOf="@+id/CardName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/CardUpvotesLabel"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="1.0" />
+
+            <ImageView
+                android:id="@+id/CardPicture"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/CardText"
+                tools:srcCompat="@tools:sample/avatars[12]" />
+
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.v7.widget.CardView>
+
+</android.support.constraint.ConstraintLayout>
