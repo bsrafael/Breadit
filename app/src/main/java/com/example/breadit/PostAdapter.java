@@ -1,9 +1,15 @@
 package com.example.breadit;
 
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,12 +24,15 @@ import com.example.breadit.models.ListingChild;
 import com.example.breadit.models.RedditListing;
 import com.example.breadit.network.RedditClient;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static android.support.v4.content.ContextCompat.startActivity;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     private RecyclerView recyclerView;
@@ -37,6 +46,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     private final int visibleThreshold = 5;
     private boolean loading = false;
     private BDSQLiteHelper db;
+
+    private Context context = null;
 
     public PostAdapter(RedditClient client, RecyclerView recyclerView) {
         this.recyclerView = recyclerView;
@@ -84,8 +95,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
             @Override
             public void onFailure(Call<RedditListing> call, Throwable t) {
-                Toast.makeText(recyclerView.getContext(), "Something went wrong...Sorry......" + t.getMessage() + after, Toast.LENGTH_SHORT).show();
-
+                Toast.makeText(recyclerView.getContext(), "Something went wrong...Sorry......" + t.getMessage() + after, Toast.LENGTH_LONG).show();
                 loading = false;
             }
         });
@@ -144,6 +154,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
         public ViewHolder(@NonNull final View itemView) {
             super(itemView);
+            context = itemView.getContext();
+
             itemView.setOnClickListener(this);
             CardName = itemView.findViewById(R.id.CardName);
             CardTime = itemView.findViewById(R.id.CardTime);
@@ -176,17 +188,63 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             CardName.setText(post.getTitle());
             CardTime.setText(post.getTime());
             CardUser.setText(post.getAuthor());
-            CardText.setText(post.getText());
+
+            if(post.getText().length() > 140)
+                CardText.setText(post.getText().substring(0, 140) + "..." );
+            else
+                CardText.setText(post.getText());
+
             CardUpvotes.setText(new Integer(post.getScore()).toString());
             CardSave.setChecked(post.getSavedState());
-
             CardPicture.setImageBitmap(null);
+
+
+            if (post.getPicture() != null || post.getPicture() != "") {
+                new DownloadImageTask(CardPicture)
+                        .execute(post.getPicture());
+                CardPicture.getLayoutParams().height = 250;
+                CardPicture.requestLayout();
+            }
         }
 
 
         public void onClick(View view) {
             Toast.makeText(view.getContext(),"Você selecionou "
                     + posts.get(getLayoutPosition()).getTitle(),Toast.LENGTH_LONG). show();
+
+//            TODO: finish intent stuff. Reference: PDF 02. Activities, Intents and Layouts.
+//            Post currentPost = posts.get(getLayoutPosition());
+//            Intent intent = new Intent(context, Content.class);
+//            Bundle bundle = new Bundle();
+//            intent.putExtra("post", currentPost);
+//            startActivity(context, intent, bundle);
+        }
+
+
+    }
+
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+
+        public DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
         }
     }
 }
