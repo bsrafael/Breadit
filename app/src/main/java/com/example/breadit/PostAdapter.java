@@ -95,7 +95,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
             @Override
             public void onFailure(Call<RedditListing> call, Throwable t) {
-                Toast.makeText(recyclerView.getContext(), "Something went wrong...Sorry......" + t.getMessage() + after, Toast.LENGTH_LONG).show();
+                Toast.makeText(recyclerView.getContext(), "Something went wrong...Sorry......", Toast.LENGTH_LONG).show();
                 loading = false;
             }
         });
@@ -113,7 +113,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             String author = child.getData().getAuthor();
             String title = child.getData().getTitle();
             String text = child.getData().getSelftext();
-            String thumbnail = child.getData().getThumbnail(); // TODO change name in post to thumbnail
+            String thumbnail = child.getData().getThumbnail(); // TODO get actual post image or fix layout
             boolean savedState = db.getPost(id) != null;
 
             posts.add(new Post(id, score, author, title, text, thumbnail, savedState));
@@ -177,7 +177,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                     }
                     else {
                         int i = db.deletePost(post);
-                        Toast.makeText(itemView.getContext(), "i = " + i, Toast.LENGTH_LONG).show();
                     }
                 }
             });
