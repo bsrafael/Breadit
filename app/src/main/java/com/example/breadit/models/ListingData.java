@@ -12,7 +12,7 @@ public class ListingData {
     @SerializedName("dist")
     @Expose
     private Integer dist;
-    @SerializedName("listingChildren")
+    @SerializedName("children")
     @Expose
     private List<ListingChild> children = null;
     @SerializedName("after")

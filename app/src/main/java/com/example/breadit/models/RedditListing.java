@@ -8,7 +8,7 @@ public class RedditListing {
     @SerializedName("kind")
     @Expose
     private String kind;
-    @SerializedName("listingData")
+    @SerializedName("data")
     @Expose
     private ListingData data;
 

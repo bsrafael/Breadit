@@ -4,11 +4,11 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public final class ClientFactory {
-    public static final String BASE_URL = "old.reddit.com/";
+    public static final String BASE_URL = "https://old.reddit.com/";
 
-    public static final RedditClient GetSubRedditClient(String sub) {
+    public static final RedditClient GetRedditClient() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL + "r/" + sub)
+                .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
