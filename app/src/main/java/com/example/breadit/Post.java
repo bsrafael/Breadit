@@ -1,13 +1,12 @@
 package com.example.breadit;
 
-import android.net.Uri;
 import java.io.Serializable;
 
 public class Post implements Serializable {
 
 
-    private int id;
-    private int upvotes;
+    private String id;
+    private int score;
     private String time;
     private String author;
     private String title;
@@ -19,9 +18,9 @@ public class Post implements Serializable {
 
     }
 
-    public Post(int id, int upvotes, String author, String title, String text, String picture, boolean savedState) {
+    public Post(String id, int score, String author, String title, String text, String picture, boolean savedState) {
         this.id = id;
-        this.upvotes = upvotes;
+        this.score = score;
         this.author = author;
         this.title = title;
         this.text = text;
@@ -30,11 +29,11 @@ public class Post implements Serializable {
     }
 
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -46,12 +45,12 @@ public class Post implements Serializable {
         this.time = time;
     }
 
-    public int getUpvotes() {
-        return upvotes;
+    public int getScore() {
+        return score;
     }
 
-    public void setUpvotes(int upvotes) {
-        this.upvotes = upvotes;
+    public void setScore(int score) {
+        this.score = score;
     }
 
     public String getAuthor() {

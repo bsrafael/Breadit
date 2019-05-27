@@ -13,11 +13,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.breadit.data.BDSQLiteHelper;
 import com.example.breadit.models.ListingChild;
 import com.example.breadit.models.RedditListing;
 import com.example.breadit.network.RedditClient;
@@ -43,6 +45,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     private int totalItemCount;
     private final int visibleThreshold = 5;
     private boolean loading = false;
+    private BDSQLiteHelper db;
 
     private Context context = null;
 
@@ -53,6 +56,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         count = 0;
         before = "";
         after = "";
+
+        db = new BDSQLiteHelper(recyclerView.getContext());
 
         getNextPage();
 
@@ -90,7 +95,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
             @Override
             public void onFailure(Call<RedditListing> call, Throwable t) {
-                Toast.makeText(recyclerView.getContext(), "Something went wrong...Sorry......" + t.getMessage() + after, Toast.LENGTH_LONG).show();
+                Toast.makeText(recyclerView.getContext(), "Something went wrong...Sorry......", Toast.LENGTH_LONG).show();
                 loading = false;
             }
         });
@@ -103,16 +108,15 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
         List<ListingChild> children = listing.getListingData().getChildren();
         for (ListingChild child : children) {
-            int tempId = 0; // TODO remove
-            String id = child.getData().getId(); // TODO change post id to string
-            int upvotes = child.getData().getScore(); // TODO change to score on code
+            String id = child.getData().getId();
+            int score = child.getData().getScore();
             String author = child.getData().getAuthor();
             String title = child.getData().getTitle();
             String text = child.getData().getSelftext();
-            String thumbnail = child.getData().getThumbnail(); // TODO change name in post to thumbnail
-            boolean savedState = false; // TODO query from database with string id
+            String thumbnail = child.getData().getThumbnail(); // TODO get actual post image or fix layout
+            boolean savedState = db.getPost(id) != null;
 
-            posts.add(new Post(tempId, upvotes, author, title, text, thumbnail, savedState));
+            posts.add(new Post(id, score, author, title, text, thumbnail, savedState));
         }
 
         notifyDataSetChanged();
@@ -139,6 +143,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        private Post post;
         private TextView CardName;
         private TextView CardTime;
         private TextView CardUser;
@@ -147,7 +152,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         private Switch CardSave;
         private ImageView CardPicture;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull final View itemView) {
             super(itemView);
             context = itemView.getContext();
 
@@ -160,10 +165,25 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             CardSave = itemView.findViewById(R.id.CardSave);
             CardPicture = itemView.findViewById(R.id.CardPicture);
 
+            CardSave.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (post == null)
+                        return;
 
+                    if (isChecked) {
+                        if (db.getPost(post.getId()) == null)
+                            db.addPost(post);
+                    }
+                    else {
+                        int i = db.deletePost(post);
+                    }
+                }
+            });
         }
 
         private void setData(Post post) {
+            this.post = post;
             CardName.setText(post.getTitle());
             CardTime.setText(post.getTime());
             CardUser.setText(post.getAuthor());
@@ -173,10 +193,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             else
                 CardText.setText(post.getText());
 
-            CardUpvotes.setText(new Integer(post.getUpvotes()).toString());
+            CardUpvotes.setText(new Integer(post.getScore()).toString());
             CardSave.setChecked(post.getSavedState());
-
             CardPicture.setImageBitmap(null);
+
 
             if (post.getPicture() != null || post.getPicture() != "") {
                 new DownloadImageTask(CardPicture)
@@ -184,7 +204,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                 CardPicture.getLayoutParams().height = 250;
                 CardPicture.requestLayout();
             }
-
         }
 
 
@@ -227,6 +246,5 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             bmImage.setImageBitmap(result);
         }
     }
-
 }
 
