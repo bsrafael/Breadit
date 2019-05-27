@@ -26,14 +26,14 @@
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ContentUser" />
+                app:layout_constraintTop_toBottomOf="@+id/ContentAuthor" />
 
             <TextView
                 android:id="@+id/ContentText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:text="@string/sample_text"
                 android:textColor="@color/colorTextPrimary"
@@ -58,14 +58,15 @@
                 tools:srcCompat="@tools:sample/avatars[0]" />
 
             <TextView
-                android:id="@+id/ContentUser"
+                android:id="@+id/ContentAuthor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginEnd="8dp"
                 android:text="u/JohnSample"
                 android:textColor="@color/colorTextSecondary"
+                android:textSize="12sp"
                 app:layout_constraintEnd_toStartOf="@+id/ContentScore"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -79,8 +80,9 @@
                 android:layout_marginEnd="2dp"
                 android:text="@string/sample_count_2"
                 android:textColor="@color/colorTextTertiary"
+                android:textSize="10sp"
                 app:layout_constraintEnd_toStartOf="@+id/ContentScoreLabel"
-                app:layout_constraintStart_toEndOf="@+id/ContentUser"
+                app:layout_constraintStart_toEndOf="@+id/ContentAuthor"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Switch
@@ -89,11 +91,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
+                android:checked="false"
+                android:showText="false"
+                android:splitTrack="false"
                 android:text="@string/label_save"
                 android:textColor="@color/colorTextTertiary"
-                android:textSize="12sp"
+                android:textSize="8sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:checked="false" />
 
             <TextView
                 android:id="@+id/ContentScoreLabel"
@@ -103,6 +109,7 @@
                 android:layout_marginTop="16dp"
                 android:text="@string/label_upvotes"
                 android:textColor="@color/colorTextTertiary"
+                android:textSize="10sp"
                 app:layout_constraintStart_toEndOf="@+id/ContentScore"
                 app:layout_constraintTop_toTopOf="parent" />
         </android.support.constraint.ConstraintLayout>

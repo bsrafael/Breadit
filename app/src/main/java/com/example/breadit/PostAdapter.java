@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.example.breadit.data.BDSQLiteHelper;
 import com.example.breadit.models.ListingChild;
 import com.example.breadit.models.RedditListing;
+import com.example.breadit.network.DownloadImageTask;
 import com.example.breadit.network.RedditClient;
 
 import java.io.InputStream;
@@ -201,50 +202,25 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             if (post.getPicture() != null || post.getPicture() != "") {
                 new DownloadImageTask(CardPicture)
                         .execute(post.getPicture());
-                CardPicture.getLayoutParams().height = 250;
+                CardPicture.getLayoutParams().width = ((View)CardPicture.getParent()).getWidth();
                 CardPicture.requestLayout();
             }
         }
 
 
         public void onClick(View view) {
-            Toast.makeText(view.getContext(),"Você selecionou "
-                    + posts.get(getLayoutPosition()).getTitle(),Toast.LENGTH_LONG). show();
 
-//            TODO: finish intent stuff. Reference: PDF 02. Activities, Intents and Layouts.
-//            Post currentPost = posts.get(getLayoutPosition());
-//            Intent intent = new Intent(context, Content.class);
-//            Bundle bundle = new Bundle();
-//            intent.putExtra("post", currentPost);
-//            startActivity(context, intent, bundle);
+                Post post = posts.get(getLayoutPosition());
+                Intent intent = new Intent(context, Content.class);
+                intent.putExtra("post", post);
+
+                startActivity(context, intent, null);
+
         }
 
 
     }
 
-    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-        ImageView bmImage;
 
-        public DownloadImageTask(ImageView bmImage) {
-            this.bmImage = bmImage;
-        }
-
-        protected Bitmap doInBackground(String... urls) {
-            String urldisplay = urls[0];
-            Bitmap mIcon11 = null;
-            try {
-                InputStream in = new java.net.URL(urldisplay).openStream();
-                mIcon11 = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-                Log.e("Error", e.getMessage());
-                e.printStackTrace();
-            }
-            return mIcon11;
-        }
-
-        protected void onPostExecute(Bitmap result) {
-            bmImage.setImageBitmap(result);
-        }
-    }
 }
 
