@@ -34,9 +34,6 @@ public class Content extends AppCompatActivity {
         findViews();
         setContent();
 
-
-
-
     }
 
 
