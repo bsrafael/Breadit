@@ -15,4 +15,10 @@
     <string name="sample_count">123</string>
     <string name="sample_count_2">42</string>
 
+    <string name="menu_feed">Últimos posts</string>
+    <string name="menu_salvos">Posts salvos</string>
+
+    <string name="app_feed">Últimos posts</string>
+    <string name="app_database">Posts salvos</string>
+
 </resources>

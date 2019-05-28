@@ -14,5 +14,7 @@
     <color name="colorTextSecondary">#3f3f3f</color>
     <color name="colorTextTertiary">#777777</color>
 
+    <color name="actionbar_text">#FFFFFF</color>
+
 
 </resources>

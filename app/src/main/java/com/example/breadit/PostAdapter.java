@@ -179,6 +179,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                     else {
                         int i = db.deletePost(post);
                     }
+                    post.setSavedState(isChecked);
+
                 }
             });
         }
@@ -205,6 +207,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                 CardPicture.getLayoutParams().width = ((View)CardPicture.getParent()).getWidth();
                 CardPicture.requestLayout();
             }
+
+
         }
 
 
