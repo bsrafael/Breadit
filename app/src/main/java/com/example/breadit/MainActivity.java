@@ -70,7 +70,8 @@ public class MainActivity extends AppCompatActivity {
             getSupportActionBar().setTitle(R.string.app_feed);
         }
 
-        Toast.makeText(getApplicationContext(), "TODO: Implementar lógica do feed", Toast.LENGTH_SHORT).show();
+        PostAdapter adapter = new PostAdapter(breaditClient, rv_posts);
+        rv_posts.setAdapter(adapter);
 
     }
 

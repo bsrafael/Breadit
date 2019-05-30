@@ -79,6 +79,19 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         }
     }
 
+    public PostAdapter(RecyclerView recyclerView) {
+        this.recyclerView = recyclerView;
+        this.posts = new ArrayList<>();
+        this.client = null;
+        count = 0;
+        before = "";
+        after = "";
+
+        db = new BDSQLiteHelper(recyclerView.getContext());
+
+        getSaved();
+    }
+
     private void getNextPage() {
         Call<RedditListing> call;
 
@@ -114,12 +127,17 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             String author = child.getData().getAuthor();
             String title = child.getData().getTitle();
             String text = child.getData().getSelftext();
-            String thumbnail = child.getData().getThumbnail(); // TODO get actual post image or fix layout
+            String image = child.getData().getUrl();
             boolean savedState = db.getPost(id) != null;
 
-            posts.add(new Post(id, score, author, title, text, thumbnail, savedState));
+            posts.add(new Post(id, score, author, title, text, image, savedState));
         }
 
+        notifyDataSetChanged();
+    }
+
+    private void getSaved() {
+        posts = db.getAllPosts();
         notifyDataSetChanged();
     }
 
@@ -177,7 +195,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                             db.addPost(post);
                     }
                     else {
-                        int i = db.deletePost(post);
+                        db.deletePost(post);
                     }
                     post.setSavedState(isChecked);
 

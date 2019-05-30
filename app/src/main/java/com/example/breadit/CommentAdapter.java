@@ -8,6 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.breadit.models.ListingChild;
+import com.example.breadit.models.RedditListing;
+
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 // TODO: comment handling [2]
@@ -16,6 +21,38 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     private Context context = null;
     private List<Comment> comments;
 
+    public CommentAdapter(RedditListing rawComments) {
+        comments = new ArrayList<Comment>();
+
+        for (ListingChild rawComment : rawComments.getListingData().getChildren()) {
+            String id = rawComment.getData().getId();
+            //String time = rawChild.getData().
+            String time = "Placeholder";
+            String author = rawComment.getData().getAuthor();
+            String text = rawComment.getData().getBody();
+            List<Comment> children = getChildComments(rawComment);
+            comments.add(new Comment(id, "", time, author, text, children));
+        }
+
+        notifyDataSetChanged();
+    }
+
+    private List<Comment> getChildComments(ListingChild rawComment) {
+        String fatherId = rawComment.getData().getId();
+        List<Comment> result = new ArrayList<Comment>();
+
+        for (ListingChild rawChild : rawComment.getData().getReplies().getListingData().getChildren()) {
+            String id = rawChild.getData().getId();
+            //String time = rawChild.getData().
+            String time = "Placeholder";
+            String author = rawChild.getData().getAuthor();
+            String text = rawChild.getData().getBody();
+            List<Comment> children = getChildComments(rawChild);
+            result.add(new Comment(id, fatherId, time, author, text, children));
+        }
+
+        return result;
+    }
 
     @NonNull
     @Override

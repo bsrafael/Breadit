@@ -159,6 +159,12 @@ public class ChildData {
     @SerializedName("created_utc")
     @Expose
     private Double createdUtc;
+    @SerializedName("replies")
+    @Expose
+    private RedditListing replies;
+    @SerializedName("body")
+    @Expose
+    private String body;
 
     public String getSubreddit() {
         return subreddit;
@@ -568,5 +574,20 @@ public class ChildData {
         this.createdUtc = createdUtc;
     }
 
+    public RedditListing getReplies() {
+        return replies;
+    }
+
+    public void setReplies(RedditListing replies) {
+        this.replies = replies;
+    }
+
+    public String getBody() {
+        return body;
+    }
+
+    public void setBody(String body) {
+        this.body = body;
+    }
 }
 
