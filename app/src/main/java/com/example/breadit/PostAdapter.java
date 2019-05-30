@@ -109,7 +109,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
             @Override
             public void onFailure(Call<RedditListing> call, Throwable t) {
-                Toast.makeText(recyclerView.getContext(), "Something went wrong...Sorry......", Toast.LENGTH_LONG).show();
+//                Toast.makeText(recyclerView.getContext(), "Something went wrong...Sorry......", Toast.LENGTH_LONG).show();
                 loading = false;
             }
         });

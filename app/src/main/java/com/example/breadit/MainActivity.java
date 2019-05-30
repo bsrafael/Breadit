@@ -83,7 +83,9 @@ public class MainActivity extends AppCompatActivity {
             getSupportActionBar().setTitle(R.string.app_database);
         }
 
-        Toast.makeText(getApplicationContext(), "TODO: Implementar lógica do banco", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getApplicationContext(), "TODO: Implementar lógica do banco", Toast.LENGTH_SHORT).show();
+        PostAdapter adapter = new PostAdapter(rv_posts);
+        rv_posts.setAdapter(adapter);
     }
 
 
