@@ -1,6 +1,7 @@
 package com.example.breadit;
 
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -66,12 +67,18 @@ public class Content extends AppCompatActivity {
 
         ContentSavedState.setChecked(post.getSavedState());
 
-        if (post.getPicture() != null || post.getPicture() != "") {
-            new DownloadImageTask(ContentPicture)
-                    .execute(post.getPicture());
+        if (post.getPictureLocal() != null) {
+            ContentPicture.setImageBitmap(BitmapFactory.decodeFile(post.getPictureLocal()));
             ContentPicture.getLayoutParams().width = ((View)ContentPicture.getParent()).getWidth();
             ContentPicture.requestLayout();
-        }
+
+        } else if (post.getPicture() != null || post.getPicture() != "") {
+                new DownloadImageTask(ContentPicture, post)
+                        .execute(post.getPicture());
+                ContentPicture.getLayoutParams().width = ((View)ContentPicture.getParent()).getWidth();
+                ContentPicture.requestLayout();
+            }
+
         else {
             ContentPicture.setVisibility(View.GONE);
         }

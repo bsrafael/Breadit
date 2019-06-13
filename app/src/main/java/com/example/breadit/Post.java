@@ -12,13 +12,16 @@ public class Post implements Serializable {
     private String title;
     private String text;
     private String picture;
+    private String pictureLocal;
     private boolean savedState;
 
     public Post(){
 
     }
 
-    public Post(String id, int score, String author, String title, String text, String picture, boolean savedState) {
+
+
+    public Post(String id, int score, String author, String title, String text, String picture, boolean savedState, String pictureLocal) {
         this.id = id;
         this.score = score;
         this.author = author;
@@ -26,6 +29,7 @@ public class Post implements Serializable {
         this.text = text;
         this.picture = picture;
         this.savedState = savedState;
+        this.pictureLocal = pictureLocal;
     }
 
 
@@ -92,6 +96,10 @@ public class Post implements Serializable {
     public void setSavedState(boolean savedState) {
         this.savedState = savedState;
     }
+
+    public String getPictureLocal() { return pictureLocal; }
+
+    public void setPictureLocal(String pictureLocal) { this.pictureLocal = pictureLocal; }
 
 
 

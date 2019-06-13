@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
 import com.example.breadit.Post;
 
@@ -12,8 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BDSQLiteHelper extends SQLiteOpenHelper {
+    private Context context;
     private static final String DATABASE_NAME = "Breadit";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     private static final String TABELA_POSTS = "Posts";
     private static final String POSTS_ID = "Id";
@@ -23,9 +25,11 @@ public class BDSQLiteHelper extends SQLiteOpenHelper {
     private static final String POSTS_TITLE = "Title";
     private static final String POSTS_TEXT = "Text";
     private static final String POSTS_PICTURE = "Picture";
+    private static final String POSTS_PICTURE_LOCAL = "PictureLocal";
 
     public BDSQLiteHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        this.context = context;
     }
 
     @Override
@@ -37,7 +41,8 @@ public class BDSQLiteHelper extends SQLiteOpenHelper {
                 "Author TEXT," +
                 "Title TEXT," +
                 "Text TEXT," +
-                "Picture TEXT)";
+                "Picture TEXT," +
+                "PictureLocal TEXT)";
 
         db.execSQL(createPosts);
     }
@@ -58,6 +63,7 @@ public class BDSQLiteHelper extends SQLiteOpenHelper {
         values.put(POSTS_TITLE, post.getTitle());
         values.put(POSTS_TEXT, post.getText());
         values.put(POSTS_PICTURE, post.getPicture());
+        values.put(POSTS_PICTURE_LOCAL, post.getPictureLocal());
         db.insert(TABELA_POSTS , null, values);
         db.close();
     }
@@ -81,7 +87,8 @@ public class BDSQLiteHelper extends SQLiteOpenHelper {
         String title = cursor.getString(4);
         String text = cursor.getString(5);
         String picture = cursor.getString(6);
-        return new Post(id, score, author, title, text, picture, true);
+        String pictureLocal = cursor.getString(7);
+        return new Post(id, score, author, title, text, picture, true, pictureLocal);
     }
 
     public List<Post> getAllPosts() {
@@ -90,12 +97,19 @@ public class BDSQLiteHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
 
+        int i = 0;
+
         if (cursor.moveToFirst()) {
             do {
                 Post post = cursorToPost(cursor);
                 listaLivros.add(post);
+                i++;
             } while (cursor.moveToNext());
         }
+
+        System.out.println(i);
+        Toast.makeText(this.context, "i = "+i , Toast.LENGTH_SHORT );
+
 
         return listaLivros;
     }

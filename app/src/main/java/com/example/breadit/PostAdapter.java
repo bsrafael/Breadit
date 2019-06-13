@@ -25,6 +25,7 @@ import com.example.breadit.models.RedditListing;
 import com.example.breadit.network.DownloadImageTask;
 import com.example.breadit.network.RedditClient;
 
+import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -109,7 +110,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
             @Override
             public void onFailure(Call<RedditListing> call, Throwable t) {
-//                Toast.makeText(recyclerView.getContext(), "Something went wrong...Sorry......", Toast.LENGTH_LONG).show();
+                Toast.makeText(recyclerView.getContext(), "Something went wrong...Sorry......", Toast.LENGTH_SHORT).show();
                 loading = false;
             }
         });
@@ -130,7 +131,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             String image = child.getData().getUrl();
             boolean savedState = db.getPost(id) != null;
 
-            posts.add(new Post(id, score, author, title, text, image, savedState));
+            posts.add(new Post(id, score, author, title, text, image, savedState, null));
         }
 
         notifyDataSetChanged();
@@ -138,6 +139,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
     private void getSaved() {
         posts = db.getAllPosts();
+//        Toast.makeText(context, "Post " + posts.get(0).getTitle(), Toast.LENGTH_LONG);
         notifyDataSetChanged();
     }
 
@@ -218,12 +220,21 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             CardSave.setChecked(post.getSavedState());
             CardPicture.setImageBitmap(null);
 
+            if (post.getPictureLocal() != null) {
 
-            if (post.getPicture() != null || post.getPicture() != "") {
-                new DownloadImageTask(CardPicture)
-                        .execute(post.getPicture());
+                CardPicture.setImageBitmap(BitmapFactory.decodeFile(post.getPictureLocal()));
                 CardPicture.getLayoutParams().width = ((View)CardPicture.getParent()).getWidth();
                 CardPicture.requestLayout();
+
+
+            } else {
+                if (post.getPicture() != null || post.getPicture() != "") {
+                    new DownloadImageTask(CardPicture, post)
+                            .execute(post.getPicture());
+                    CardPicture.getLayoutParams().width = ((View)CardPicture.getParent()).getWidth();
+                    CardPicture.requestLayout();
+                }
+
             }
 
 
